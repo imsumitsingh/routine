@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="css/bootstrap.min.css?2.0" rel="stylesheet"/>
+    <link href="css/site.css" rel="stylesheet"/>
+    <link href="fontawesome/css/all.css" rel="stylesheet"/>
+    <style>
+        label{
+            margin: 0;
+            padding: 0;
+        }
+        @media print{     
+            #form{
+               display: none;
+            }
+            .not-show{
+                display: none;
+            }
+            body{
+                height:100vh ;
+                width: 100%;
+                display: flex;
+                align-items: center;             
+                flex-direction: column;
+                padding-left: 1rem;
+                padding-right: 1rem;
+                padding-top: 2rem;
+            }
+            
+          
+       }
+        
+        .table{
+           font-size: 80%;
+        }
+        #form{
+            font-size: 80%;
+        }
+      
+      thead th{
+        padding: 0.5rem 0.5rem !important;
+        white-space: nowrap;
+        vertical-align: middle;
+      }
+      tbody td{
+        padding: 0.1rem 0.5rem !important;
+        vertical-align: middle;
+        
+      }
+      .badge-danger{
+        cursor: pointer;
+      }
+      
+    </style>
+    <style type="text/css" media="print">
+        @page {size: landscape;}
+        </style>
+    <script>
+        function Print(){
+           window.print()
+        }
+    </script>
+</head>
+<body>
+    
+    <div class="row mt-2 ml-1 mr-1" id="form"> 
+           
+        <div class="col-md-4 col-12 mb-1">
+            <label>TEACHER'S NAME</label>
+            <input id="name" type="text" class="form-control form-control-sm text-uppercase" placeholder="TEACHER'S NAME" />
+        </div>
+        <div class="col-md-4 col-6 mb-1">
+            <label>CLASS</label>
+            <select id="cls"  class="form-control form-control-sm">
+                <option value="11-12">11-12</option>
+                <option value="09-10">09-10</option>
+                <option value="06-08">06-08</option>
+                <option value="01-05">01-05</option>
+            </select>
+        </div>
+        <div class="col-md-4 col-6 mb-1">
+            <label>DOJ</label>
+            <input id="doj" type="text" class="form-control form-control-sm" placeholder="DD-MM-YYYY" />
+        </div>
+        <div class="col-md-4 col-6 mb-1">
+            <label>PRAN</label>
+            <input id="pran" type="text" class="form-control form-control-sm" placeholder="" />
+        </div>
+        <div class="col-md-4 col-6 mb-1">
+            <label>ACCOUNT No.</label>
+            <input id="acno" type="text" class="form-control form-control-sm" placeholder="" />
+        </div>
+        <div class="col-md-4 col-4 mb-1">
+            <label>BASIC</label>
+            <input id="basic" type="text" class="form-control form-control-sm" placeholder="BASIC SALARY" />
+        </div>
+        <div class="col-md-4 col-4 mb-1">
+            <label>DA</label>
+            <select id="da" class="form-control form-control-sm">
+                <option>50%</option>
+                <option>46%</option>
+            </select>
+        </div>
+        <div class="col-md-4 col-4 mb-1">
+            <label>HRA</label>
+            <select id="hra" class="form-control form-control-sm">
+                <option value="4">4%</option>
+                <option value="8">8%</option>
+                <option value="16">16%</option>
+            </select>
+        </div>
+        <div class="col-md-4 col-12 mb-1 text-center">
+            <label>&nbsp;</label><br>
+        <input type="submit" onclick="Add(this)" value="ADD" class="btn btn-sm btn-primary" />
+        <button onclick="Print()" class="btn btn-sm  btn-success">Print</button>
+        </div>
+    </div>
+   
+</form>
+   <div class="row">
+    <div class="col-md-12 col-12 mb-1">
+        <h2 class="heading text-center text-uppercase font-weight-bold"></h2>
+        <h4 class="sub-heading text-center text-uppercase font-weight-bold"></h4>
+    </div>
+   </div>
+    <div class="row">
+        <div class="col-md-12 col-12 table-responsive" id="tbl" >
+        <table class="table table-bordered">
+            <thead>
+                <th>#</th>
+                <th>TEACHER NAME</th>
+                <th>CLASS</th>                
+                <th>W.D</th>
+                <th>JOINING DT</th>
+                <th>PRAN</th>
+                <th>ACCOUNT NO</th>
+                <th>BASIC</th>
+                <th>DA</th>
+                <th>HRA</th>
+                <th>MEDICAL</th>
+                <th>TOTAL</th>
+                <th>NPS</th>
+                <th>BIMA</th>
+                <th>NET PAY</th>
+                <th class="not-show"></th>
+            </thead>
+            <tbody class="tbl-body">
+            </tbody>
+        </table>
+        <div>
+        
+    </div>
+
+    <script src="js/jquery.js"></script>
+   
+    <script>
+  function getMonthName(monthNumber) {
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  if (monthNumber >= 0 && monthNumber <= 11) {
+    return months[monthNumber];
+  } else {
+    return "Invalid month number";
+  }
+}
+  function getDaysInMonth(date) {
+  // Get the month and year of the given date
+  const month = date.getMonth();
+  const year = date.getFullYear();
+
+  // Create a new Date object for the next month
+  // (day 0 means the last day of the previous month)
+  const nextMonthDate = new Date(year, month + 1, 0);
+
+  // Return the day component of the next month's date
+  // This will give us the total number of days in the month of the given date
+  return nextMonthDate.getDate();
+}
+        var school=localStorage.getItem("school");
+        var block=localStorage.getItem("block")
+        var workingDay=getDaysInMonth(new Date())
+        var month=getMonthName(localStorage.getItem("month"))
+        var year=new Date().getFullYear()
+        $(".heading").html(`शिक्षकों की अनुपस्थिति विवरणी <br/>${month} ${year}`)
+        $(".sub-heading").text(`${school}, ${block}`)
+     function Add(e){      
+        var name=$("#name").val()
+        var doj=$("#doj").val()
+        var pran=$("#pran").val()
+        var acno=$("#acno").val()
+        var basic=$("#basic").val()
+        var hrapr=$("#hra").val()
+        var cls=$("#cls").val()
+        var wd=workingDay;
+
+        if(name==""){
+            alert("Name is required")
+            return
+        }
+        if(pran==""){
+            alert("PRAN is required")
+            return
+        }
+        if(doj==""){
+            alert("DOJ is required")
+            return
+        }
+        if(basic==""){
+            alert("Basic is required")
+            return
+        }
+        if(acno==""){
+            alert("Account number is required")
+            return
+        }
+        if(cls==""){
+            alert("Class number is required")
+            return
+        }
+        
+        var da=parseFloat(basic)*0.5;
+        var nps=(parseFloat(basic)+da)*0.1
+        var bima=30;
+        var medical=1000;
+        var hra=(parseFloat(basic)*(parseFloat(hrapr)/100))
+        var total=parseFloat(basic)+parseFloat(da)+parseFloat(hra)+medical;
+        var netpay=total-nps-bima;
+        var rowcount=$("tbl-body tr").length
+        $(".tbl-body").append(`
+        <tr>
+            <td>${"1"}</td>
+            <td>${name.toUpperCase()}</td>
+            <td>${cls}</td>
+            <td>${wd}</td>
+            <td>${doj}</td>
+            <td>${pran}</td>
+            <td>${acno}</td>
+            <td>${basic}</td>
+            <td>${da}</td>
+            <td>${hra}</td>
+            <td>${medical}</td>
+            <td>${total}</td>
+            <td>${nps}</td>
+            <td>${bima}</td>
+            <td>${netpay}</td>
+            <td class="not-show" onclick="remove(this)"><span class="badge badge-danger badge-pill">Remove</td>
+        </tr>
+        `)
+     }
+
+     function remove(e){
+          $(e).parent().remove();
+     }
+    </script>
+</body>
+</html>

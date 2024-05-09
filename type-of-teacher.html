@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/site.css" rel="stylesheet"/>
+    <link href="fontawesome/css/all.css" rel="stylesheet"/>
+    <style>
+        body{
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="row w-100 justify-content-center">
+        <div class="col-md-3 col-12 mb-2">           
+            <input id="school" class="form-control form-control-sm" type="text" placeholder="SCHOOL NAME" >
+        </div>
+        <div class="col-md-3 col-12 mb-2">           
+            <input id="block" class="form-control form-control-sm" type="text" placeholder="BLOCK NAME" >
+        </div>
+        <div class="col-md-3 col-12 mb-2">           
+            <select id="teacherType" class="form-control form-control-sm">
+                 <option value="BPSC">BPSC TEACHER</option>
+            </select>
+        </div>
+        <div class="col-md-3 col-12 mb-2">           
+            <select id="month" class="form-control form-control-sm">
+                 <option value="0">JAN</option>
+                 <option value="1">FEB</option>
+                 <option value="2">MAR</option>
+                 <option value="3">APR</option>
+                 <option value="4">MAY</option>
+                 <option value="5">JUN</option>
+                 <option value="6">JUL</option>
+                 <option value="7">AUG</option>
+                 <option value="8">SEP</option>
+                 <option value="9">OCT</option>
+                 <option value="10">NOV</option>
+                 <option value="11">DEC</option>
+                 
+            </select>
+        </div>
+        <div class="col-md-3 col-12 text-center">           
+            <input class="btn btn-sm btn-primary" onclick="navigate()" type="button" value="NEXT">
+        </div>
+
+    </div>
+    <script src="js/jquery.js"></script>
+    <script>
+         function navigate(){
+            if($("#teacherType").val()==""){
+            alert("Teacher Type is required")
+            return
+        }
+        if($("#school").val()==""){
+            alert("School is required")
+            return
+        }
+        if($("#block").val()==""){
+            alert("Block is required")
+            return
+        }
+      
+           
+            localStorage.setItem("teacher",$("#teacherType").val())
+            localStorage.setItem("school",$("#school").val())
+            localStorage.setItem("block",$("#block").val())
+            localStorage.setItem("month",$("#month").val())
+            window.location='absentee.html'
+         }
+
+
+  
+    </script>
+</body>
+</html>

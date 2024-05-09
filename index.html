@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>फुलीयखांड-रूटीन  </title>
+<link href="css/bootstrap.min.css" rel="stylesheet"/>
+<link href="css/site.css" rel="stylesheet"/>
+<link href="fontawesome/css/all.css" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <div class="color-mode  hide-mode d-none">     
+      <div class="mode-inner"> 
+        <table style="width: 100%;">
+          <tr>
+            <td colspan="2" class="mode-trigger" style="padding-right: 30px;"></td>
+            <td style="vertical-align: bottom;padding-top: 4px;"> <input type="radio" name="optradio" id="light" checked value="light" ></td>
+            <td style="padding-right: 10px;"><label for="light">Light</label></td>
+          
+            <td style="vertical-align: bottom;padding-top: 4px;"> <input type="radio" name="optradio" id="dark"  value="dark"></td>
+            <td style="padding-right: 10px;"><label for="dark">Dark</label></td>
+          </tr>
+        </table>       
+      </div>
+  </div>
+  <div class="alert  font-weight-bold mb-0 rounded-0 alert-heading" role="alert">
+    <div class="row justify-content-between align-items-center">
+     <div class="col-4 col-md-4"><span id="umv">UMV</span><span id="fuliya">FULIYAKHAND</span></div>
+     <div class="col-8 col-md-8 text-right"><span id="period"></span></div>
+    </div>
+   </div>
+   <div class="alert  font-weight-bold  mb-0 rounded-0 alert-menu pb-0 pt-0" role="alert">
+    <div class="row justify-content-between">
+      <div class="col-12 col-md-12">
+        <table class=" tblMenu mb-0 w-100">
+          <tr>
+            <td style="width:25%; text-align: center;" class="openTeacher"><i class="fa-solid fa-user mr-1"></i><span>Absentee<span></span></td>
+            <td class="openRoutine" style="width: 25%;"><i class="fa-solid fa-bell mr-1"></i><span>Routine</span></td>
+            <td style="width:25%;text-align: center;" class="openCalender"><i class="fa-solid fa-calendar-days mr-1"></i><span>Calender</span></td>           
+            <td class="change-theme th-day"  style="width: 25%;"><i class="fa-solid fa-moon mr-1"></i><span></span></td>
+           </tr>
+          </table>
+      </div>
+    </div>
+   </div>
+  <div class="alert pt-0 pb-0 mb-0 alert-time rounded-0" role="alert" style="display: none;">
+    <div class="row justify-content-between">
+     
+     <div class="col-12 col-md-12 text-center"><h6 id="date" class="mb-0 mr-1"></h6><h6 class="mb-0" id="time"></h6></div>
+     <div class="col-4 col-md-4 text-right"></div>
+    </div>
+   </div>
+   <div class="alert pt-0 pb-0 mb-0 alert-remain rounded-0" role="alert" style="display: none;">   
+    <div class="row justify-content-between">
+     <div class="col-12 col-md-12">
+      <h6 id="remaining" class="mb-0 text-center"></h6></div>     
+    </div>
+   </div>
+   
+<main class="container mt-3">
+<div class="row justify-content-between tiles">
+</div>
+<div class="tiles-routine" style="display: none;">
+  <div class="row justify-content-between">
+    <!-- <div class="col-sm-6 col-6 col-md-6 mb-3"><h6 class="m-0 p-0 font-weight-bold ">Choose Period</h6></div>
+    <div class="col-sm-6 col-6 col-md-6 text-right"><span class="closeRoutine badge badge-pill badge-secondary" style="cursor: pointer;">Close</span></div> -->
+  </div>
+  <div class="tiles-routine-buttons text-center mb-2">
+  <span id="btn1" class="btnPrd colorCls">1</span><span class="btnPrd" id="btn2">2</span><span class="btnPrd" id="btn3">3</span><span class="btnPrd" id="btn4">4</span><span class="btnPrd" id="btn5">5</span><span class="btnPrd" id="btn6">6</span><span class="btnPrd" id="btn7">7</span>
+</div>
+<div class="mb-2 text-center"><span class="badge" id="routineDuration"></span></div>
+<div class="row justify-content-between tiles-routine-inner"></div>
+</div>
+<div id="safe"></div>
+<div>
+  <marquee width="100%" direction="left" id="mar" style="font-size: 100%;display: none;"  ></marquee>
+    <div class="current-period-detail" style="display: block">
+      <h5 id="heading"></h5>
+       <div class="row pl-3 pr-3" style=" padding-top: 0.5rem;padding-bottom: 20px;">
+         <div class="col-12">
+             <div id="availableTeachers"></div>
+         </div>
+        </div>
+  </div>
+  <div class="period-detail" style="display: none;">
+    <h5 id="p-heading"></h5>
+     <div class="row pl-3 pr-3" style=" padding-top: 0.5rem;padding-bottom: 20px;">
+       <div class="col-12">
+           <div id="p-availableTeachers"></div>
+       </div>
+      </div>
+</div>
+</div>
+<div class="timer text-center" style="display: none;padding-bottom: 30px;">
+   <button type="button" id="divHour" class="btn btn-teal mt-2 pb-2 pl-4 pr-4">00</button>
+   <button type="button" id="divMin"  class="btn btn-teal mt-2 pb-2 pl-3 pr-3">00</button>
+   <button type="button" id="divSec"  class="btn btn-teal mt-2 pb-2">00</button>
+</div>
+</main>
+
+<div class="modal fade" id="modcalender" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row justify-content-between">
+          <div class="col-sm-10 col-10 col-md-10"><span class="btnHoliday btnHoliday-border">Holiday</span><span class="btnHoliday">Safe Saturday</span></div>
+          <div class="col-sm-2 col-2 col-md-2 text-right"><span class="modalClose badge badge-pill badge-gold" style="cursor: pointer;">X</span></div>
+        </div>
+         <ul class="calender" style="padding-left: 0.2rem;list-style: none;margin-top: 10px; " ></ul>
+         <ul class="safe-saturday" style="padding-left: 0.2rem;list-style: none;margin-top: 10px;display: none;"></ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modTeacherRout" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row justify-content-between">
+          <div class="col-sm-10 col-10 col-md-10"></div>
+          <div class="col-sm-2 col-2 col-md-2 text-right"><span class="modalClose badge badge-pill badge-gold" style="cursor: pointer;">X</span></div>
+        </div>
+        <table class="table table-bordered mt-2 " >
+          <thead class="bg-main">
+            <tr><td style="width:25%">BELL</td><td style="width:30%">CLASS</td><td style="width:45%">SUBJECT</td><tr>
+            </thead>
+            <tbody id="tbl-teacher-rout"></tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modteacher" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-body">
+        <div class="row justify-content-between pb-2">
+         <div class="col-sm-10 col-10 col-md-10"><span class="btnTeacher btnHoliday-border">Teachers</span><span class="btnTeacher">Leave Record</span></div>
+          <div class="col-sm-2 col-2 col-md-2 text-right"><span class="modalClose badge badge-pill badge-gold" style="cursor: pointer;">X</span></div>
+        </div> 
+        <div class="teachers-input row" style="display: none;">
+          <div class="form-group col-12">
+            <label for="exampleInputEmail1">Name</label>
+            <select class="form-control form-control-sm" id="txtTeachers">
+              <option value="">--Choose Teacher--</option>
+              
+            </select>
+          </div>
+          <div class="form-group col-6">
+            <label for="exampleInputPassword1">From Date</label>
+            <input type="date" class="form-control form-control-sm" id="txtFromDate" placeholder="DD/MM/YYYY" >
+          </div>
+          <div class="form-group col-6">
+            <label for="exampleInputPassword1">To Date</label>
+            <input type="date" class="form-control form-control-sm" id="txtToDate" placeholder="DD/MM/YYYY" >
+          </div>
+          
+          
+          <div class="form-group col-12">
+            <label for="exampleInputPassword1">Leave Type</label>
+            <select class="form-control form-control-sm" id="txtLeaveType">
+              <option value="C.L.">Casual Leave</option>
+              <option value="S.L.">Special Leave</option>
+              <option value="M.L.>">Maternity Leave</option>
+              <option value="P.L.">Paternity Leave</option>
+              
+            </select>
+              </div>
+        
+          
+               <div class="form-group col-12">          
+                   <button class="btn btn-success btnSaveTeacher btn-block">Save</button>
+                </div>
+              <div class="teacher-table table-responsive col-sm-12">
+             <table class="table table-bordered ">
+            <thead class="bg-dark text-white">
+              <tr>
+                <td>#</td>
+                <td>Teacher</td>
+                <td>From Date</td>
+                <td>To Date</td> 
+                <td>Leave</td>
+              </tr>
+            </thead>
+            <tbody class="teacher-table-body">
+            </tbody>
+          </table>
+            </div>
+
+        </div>
+
+      
+       <div class="teacher-ul row mt-2"> 
+       </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modattendance" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">     
+      <div class="modal-body">
+        <div class="row justify-content-between pb-2">
+          <div class="col-sm-10 col-10 col-md-10"><h6 class="mb-0 attendance-heading" >Student attendance chart</h6></div>
+          <div class="col-sm-2 col-2 col-md-2 text-right"><span class="modalClose badge badge-pill badge-gold" style="cursor: pointer;">X</span></div>
+        </div>
+
+           <div class="attendance-input row">
+            <div class="form-group col-12">
+              <label for="exampleInputEmail1">Class</label>
+              <select class="form-control form-control-sm" id="txtClass">
+                <option value="">--Choose Class--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+              </select>
+            </div>
+            <div class="form-group col-6">
+              <label for="exampleInputPassword1">Date</label>
+              <input type="text" class="form-control form-control-sm" id="txtDate" placeholder="DD/MM/YYYY" disabled>
+            </div>
+            <div class="form-group col-6">
+              <label for="exampleInputPassword1">Total</label>
+              <input type="number" maxlength="150" value="0" class="form-control form-control-sm txtChange" id="txtTotal" placeholder="Total">
+            </div>
+            
+            <div class="form-group col-6">
+              <label for="exampleInputPassword1">Percentage</label>
+              <input type="text" value="0%" class="form-control form-control-sm" id="txtPercent" placeholder="Percent" disabled>
+            </div>
+            <div class="form-group col-6">
+              <label for="exampleInputPassword1">Present</label>
+              <input type="number" value="0" class="form-control form-control-sm txtChange" id="txtPresent" placeholder="Present">
+            </div>
+            
+            <div class="form-group col-12">
+            
+            <button class="btn btn-success btnSave btn-block">Save</button>
+           </div>
+          </div>
+           <div class="attendance-table table-responsive">
+            <table class="table table-bordered ">
+              <thead class="bg-dark text-white">
+                <tr>
+                  <td>Class</td>
+                  <td>Total</td>
+                  <td>Present</td>
+                  <td>%</td> 
+                  <td>75%</td>                   
+                  <td>Date</td> 
+                                 
+                </tr>
+              </thead>
+              <tbody class="attendance-table-body">
+              </tbody>
+              <tfoot class="attendance-table-foot">
+                <tr>
+                  <td>Total</td>
+                  <td class="TotalStudent"></td>
+                  <td class="TotalPresent"></td>
+                  <td class="TotalPercentage"></td>                 
+                </tr>
+              </tfoot>
+
+            </table>
+           </div>
+           <div class="attendance-table-hs table-responsive">
+            <table class="table table-bordered ">
+              <thead class="bg-dark text-white">
+                <tr>
+                  <td>Class</td>
+                  <td>Total</td>
+                  <td>Present</td>
+                  <td>%</td>
+                  <td>75%</td>    
+                  <td>Date</td>  
+                                
+                </tr>
+              </thead>
+              <tbody class="attendance-table-body-hs">
+              </tbody>
+              <tfoot class="attendance-table-foot-hs">
+                <tr>
+                  <td>Total</td>
+                  <td class="TotalStudent-hs"></td>
+                  <td class="TotalPresent-hs"></td>
+                  <td class="TotalPercentage-hs"></td>                 
+                </tr>
+              </tfoot>
+
+            </table>
+           </div>
+      
+      </div>      
+    </div>
+  </div>
+</div>
+
+
+
+<audio id="audio1" style="display: none;"> 
+  <source src="audio/first.mp3" type="audio/mpeg"> 
+</audio>
+<audio id="audio2" style="display: none;"> 
+  <source src="audio/second.mp3" type="audio/mpeg"> 
+</audio>
+<audio id="audio3" style="display: none;"> 
+  <source src="audio/third.mp3" type="audio/mpeg"> 
+</audio>
+<audio id="audio4" style="display: none;"> 
+  <source src="audio/fourth.mp3" type="audio/mpeg"> 
+</audio>
+<audio id="audio5" style="display: none;"> 
+  <source src="audio/fifth.mp3" type="audio/mpeg"> 
+</audio>
+<audio id="audio6" style="display: none;"> 
+  <source src="audio/sixth.mp3" type="audio/mpeg"> 
+</audio>
+<audio id="audio7" style="display: none;"> 
+  <source src="audio/seventh .mp3" type="audio/mpeg"> 
+</audio>
+
+<div class="footer">
+  <div class="row justify-content-between">
+    
+    <div class="col-sm-12 col-12 col-md-12 text-center"><span>Developed & Designed by </span><span class="developer" style="cursor: pointer; font-weight:bolder">Sumit</span></div>
+  </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="tooltip/jquery.popuptooltip.min.js"></script>
+<script src="js/database.js"></script>
+<script src="js/teachers.js"></script>
+<script src="js/calendernew.js"></script>
+<script src="js/activity.js"></script>
+<script src="js/teacherRoutine.js"></script>
+<script src="js/site.js"></script>
+<script src="fontawesome/js/all.js"></script>
+
+<script>
+var isHoliday=false;
+var isHolidayTm=false;
+var isSunday=false;
+var holidayName=""   
+var holidayNameTm=""  
+var start=new Date();
+var end=new Date();
+var lunchStart=new Date();
+var lunchEnd=new Date();
+var schoolStart=new Date();
+var schoolEnd=new Date();
+var gameStart=new Date();
+var gameEnd=new Date();
+var chetnaStart=new Date();
+var chetnaEnd=new Date();
+var dakshStart=new Date();
+var dakshEnd=new Date();
+var setDateTime = function(date, str){
+    var sp = str.split(':');
+    date.setHours(parseInt(sp[0],10));
+    date.setMinutes(parseInt(sp[1],10));
+    date.setSeconds(parseInt(sp[2],10));
+    return date;
+}
+
+var current = new Date();
+var c = current.getTime();
+var dayOfWeek = current.getDay();
+if (dayOfWeek === 0) {
+ isSunday=true;
+} else {
+  isSunday=false;
+}
+function convertDate(sd,ed){
+    start = setDateTime(new Date(current), sd)
+    end = setDateTime(new Date(current), ed);
+}
+schoolStart=setDateTime(new Date(current), "09:00:00");
+schoolEnd=setDateTime(new Date(current), "17:00:00");
+gameStart=setDateTime(new Date(current), "15:30:00");
+gameEnd=setDateTime(new Date(current), "16:00:00");
+chetnaStart=setDateTime(new Date(current), "09:00:00");
+chetnaEnd=setDateTime(new Date(current), "10:00:00");
+dakshStart=setDateTime(new Date(current), "16:00:00");
+dakshEnd=setDateTime(new Date(current), "17:00:00");
+
+  var routine=JSON.parse(window.data);  
+  var teachers=JSON.parse(window.teachersDetails); 
+  var allTeachers=Object.keys(teachers); 
+  var occupiedTeachers=[];
+  var availableTeachers=[];
+  
+  function load() {
+
+  if(!isSunday){
+    if(!funIsHoliday(current).isHoliday){
+      if(!(c > schoolStart.getTime() &&  c < schoolEnd.getTime())){
+          $('#period').empty().append(`School Closed`)
+          $('.tiles').empty().append(`<div class="col-md-12 col-12  mb-3"><h4 class="text-center">निचे चल रहे टाइमर के समाप्त होने पर विद्यालय खुलेगा |</h4></div>`)
+         // $('#heading').empty()
+         // $("#availableTeachers").empty();
+          $("#remaining").empty();
+          $(".timer").hide();
+          return
+        }
+      else if(c > gameStart.getTime() &&  c < gameEnd.getTime()){
+          $('#period').html("Period : खेल/गतिविधि")
+          $('.tiles').empty().append(`<div class="col-md-12 col-12  mb-3"><h4 class="text-center">अभी खेल तथा गतिविधि की घंटी चल रही है </h4></div>`)
+         // $('#heading').empty()
+         // $("#availableTeachers").empty();
+          $("#remaining").empty();
+          $(".timer").hide();
+          return
+        }
+        else if(c > chetnaStart.getTime() &&  c < chetnaEnd.getTime()){
+          $('#period').html("Period : चेतना सत्र")
+          $('.tiles').empty().append(`<div class="col-md-12 col-12  mb-3"><h4 class="text-center">अभी चेतना सत्र की घंटी चल रही है कक्षाओं का संचालन 10 बजे से शुरू होगा |</h4></div>`)
+          $('#heading').empty()
+         // $("#remaining").empty();
+        //  $("#availableTeachers").empty();
+          $(".timer").hide();
+          
+          return
+        }
+        else {
+        if(c > dakshStart.getTime() &&  c < dakshEnd.getTime()){
+          $('#period').html("Period : मिशन दक्ष ")
+          $('.tiles').empty().append(`<div class="col-md-12 col-12  mb-3"><h4 class="text-center">अभी मिशन दक्ष कक्षाओं के संचालन की घंटी चल रही है |</h4></div>`)
+         // $('#heading').empty()
+         // $("#availableTeachers").empty();
+          $("#remaining").empty();
+          $(".timer").hide();
+          return
+        }
+        }
+  for (const key in routine) {
+  if (routine.hasOwnProperty(key)) {
+    $('.tiles').append(`    
+    <div class= "col-md-3 col-6 mb-3">
+    <div class="card mr-0" id="${key}"> 
+      <div class="card-body pt-1 pb-1 pl-1">
+        <div style="white-space:nowrap">
+        <span class="badge badge-gold">Class : ${key.replace("Class","")}</span>
+        <span class="badge badge-gold" id="sub${key}"></span>
+        <div>
+        <div class="row  justify-content-center">
+               <div class="col-9 col-md-9 pr-0"><h6 id="title${key}" class="card-title truncate mb-1 p-0 pt-1 teacher-name-title"></h6></div>
+               <div class="col-3 pl-0 col-md-3 pr-0 text-right"><a id="call${key}" href="tel:121" class="badge badge-pill badge-gold-outline">Call</a></div>
+        </div>
+      </div>
+    </div>
+  `)
+  }
+  
+  routine[key].forEach(function(crr, index, arr){
+      convertDate(crr.start,crr.end)
+      if(c > start.getTime() &&  c < end.getTime()){
+        var id="#title"+key;
+        var callId="#call"+key;
+        var subId="#sub"+key;
+     $(id).html(`${crr.Teacher}`)
+     $(id).attr('onclick',`openTeacherRout('${crr.Teacher}')`)
+     $(subId).html(`${crr.subject==""?"N/A":crr.subject}`)
+     //occupiedTeachers.push(crr.Teacher);     
+     $(callId).attr("href","tel:+91"+teachers[crr.Teacher]?.Mobile)
+     //$('#period').html(`<span class="period-no">${crr.Bell}</span>`)
+     $('#period').html(`<span class="period-no">${crr.Bell}</span>`)
+     playAudio(crr.Bell);
+   
+}
+  })
+}
+   
+   availableTeachers = allTeachers.filter(item => !getOccuppiedTeachers().includes(item)).sort();
+   $("#availableTeachers").empty();
+   $("#heading").empty().html("<span>Available Teachers</span>");
+   var count=0;
+   availableTeachers.forEach(function(crr, index, arr){
+     $("#availableTeachers").append(`<div class="row  justify-content-center mb-2 av-teachers">
+               <div class="col-7 col-md-7"><h6 id="${index}" class="truncate mb-1 p-0 pt-1">${crr}</h6>
+                <div class="teacher-number"><span style="opacity:0"></span><i class="fa-solid fa-mobile-screen-button mr-1"></i>${teachers[crr].Mobile}</div>
+                </div>
+               <div class="col-5 col-md-5 text-right"> <span onclick="clicked(this,'${crr}')" class="avCall-icon" id="avCall-icon${crr.replaceAll(" ","")}"><i class="fa-solid fa-angle-down"></i></span><span class="avCall-span"> <a id="avcall${crr}" href="tel:+91${teachers[crr]?.Mobile}" class="avCall"><i class="fa-solid fa-phone"></i></a></div>
+                <div style="display:none" id="div-avCall-icon${crr.replaceAll(" ","")}" class="col-md-12 col-12">
+                  <table class="table table-bordered mt-2 tblrout" >
+                    <thead>
+                      <tr><td style="width:25%">BELL</td><td style="width:30%">CLASS</td><td style="width:45%">SUBJECT</td><tr>
+                      </thead>
+                      <tbody id="tbl-avCall-icon${crr.replaceAll(" ","")}"></tbody>
+                    </table>
+                  </div>
+                </div> `)
+   })
+   $(".timer").hide();
+   lunchStart=setDateTime(new Date(current), "12:50:00");
+   lunchEnd=setDateTime(new Date(current), "13:30:00")
+   if(c > lunchStart.getTime() &&  c < lunchEnd.getTime()){
+    $('#period').html("Period : मध्यान भोजन")
+    $('.tiles').empty().append(`<div class="col-md-12 col-12  mb-3"><h4 class="text-center">अभी मध्यान भोजन का समय चल रहा है |</h4><h4 class="text-center">पांचवीं घंटी 1:30 अपराह्न से शुरू होगी ||   </h4></div>`)
+    //$('#heading').empty()
+    //$("#availableTeachers").empty();
+  }
+      
+}
+else{
+  $('#period').empty().append(`Today is holiday`)
+  $('.tiles').empty().append(`<div class="col-md-12 col-12  mb-3"><h4 class="text-center">आज विद्यालय में ${funIsHoliday(current).holidayName} की छुट्टी है | <br> ${! isHolidayTm && 'निचे चल रहे टाइमर के समाप्त होने पर विद्यालय खुलेगा |'}</h4></div>`)
+  $('#heading').empty()
+  $(".timer").hide();
+}
+}
+else{
+  $('#period').empty().append(`Today is holiday`)
+  $('.tiles').empty().append(`<div class="col-md-12 col-12  mb-3"><h4 class="text-center">आज रविवार है इसलिए विद्यालय में पठन-पाठन का कार्य स्थगित रहेगा |</h4></div>`)
+  $('#heading').empty()
+  $(".timer").hide();
+
+}
+  }
+
+window.onload=function(){
+  setTheme();
+  load();
+  display(1)
+  getNextHoliday()
+}
+setInterval(() => {
+  $('.tiles').empty()
+  current = new Date();
+ c = current.getTime();
+dayOfWeek = current.getDay();
+if (dayOfWeek === 0) {
+ isSunday=true;
+} else {
+  isSunday=false;
+}
+schoolStart=setDateTime(new Date(current), "09:00:00");
+schoolEnd=setDateTime(new Date(current), "17:00:00");
+gameStart=setDateTime(new Date(current), "15:30:00");
+gameEnd=setDateTime(new Date(current), "16:00:00");
+chetnaStart=setDateTime(new Date(current), "09:00:00");
+chetnaEnd=setDateTime(new Date(current), "10:00:00");
+dakshStart=setDateTime(new Date(current), "16:00:00");
+dakshEnd=setDateTime(new Date(current), "17:00:00");
+  load(); 
+}, 25000)
+const options = {
+  weekday: 'long',
+  
+}
+var calender=JSON.parse(window.calenderData);
+var allHolidayDates=Object.keys(calender)
+setInterval(() => {
+  var dt=new Date(); 
+  allHolidayDates.forEach(function(crr, index, arr){
+   var arr=crr.split("/");
+   var hdt=new Date(arr[2]+"-"+arr[0]+"-"+arr[1]);
+
+  })
+  
+  let tomorrow = new Date(schoolStart.getTime() + ((1 * 24) * 60 * 60 * 1000));
+ 
+  
+  var issun=false;
+  if(!(dt.getTime() > schoolStart.getTime() &&  dt.getTime()  < schoolEnd.getTime()))
+ {
+    var dayOfW= tomorrow.getDay();
+    if (dayOfW === 0 && !isAm(dt) && !isSunday) {
+    issun=true;
+     } else {
+    issun=false;
+    }
+ }
+var difference;
+var todayHoliday=funIsHoliday(dt);
+var tomorrowHoliday=funIsHoliday(tomorrow);
+if(isAm(dt) && !funIsHoliday(dt).isHoliday && !isSunday){  
+  
+  difference = timeDifference(schoolStart, dt);
+}
+else{ 
+  difference = timeDifference(nextOpenDate(schoolStart), dt);
+}
+    var flag=0;
+    if(issun){           
+      $('.tiles').empty().append(`<div class="col-md-12 col-12  mb-3"><h4 class="text-center">कल रविवार होने के कारण विद्यालय में पठन-पाठन का कार्य स्थगित रहेगा |<br> ${isHoliday ? 'आज विद्यालय में '+holidayName+' की छुट्टी है |' :''}</h4></div>`)
+      $('#heading').empty()     
+      flag++;
+    }
+    else{
+      $("#divHour").html(`<span style="font-size:200%">${difference.hours<10?"0"+difference.hours:difference.hours}</span><br>Hours`)
+      $("#divMin").html(`<span style="font-size:200%">${difference.minutes<10?"0"+difference.minutes:difference.minutes}</span><br>Minutes`)
+      $("#divSec").html(`<span style="font-size:200%">${difference.seconds<10?"0"+difference.seconds:difference.seconds}</span><br>Seconds`)
+      
+    }
+    if(!(dt.getTime() > schoolStart.getTime() &&  dt.getTime()  < schoolEnd.getTime()) && tomorrowHoliday.isHoliday && (todayHoliday.isHoliday || !isAm(dt))){      
+      $('.tiles').empty().append(`<div class="col-md-12 col-12  mb-3"><h4 class="text-center">${todayHoliday.isHoliday ?'आज विद्यालय में '+todayHoliday.holidayName+' की छुट्टी रहेगी |':''}<br>
+        कल विद्यालय में ${tomorrowHoliday.holidayName} की छुट्टी रहेगी |<br> 
+        ${isSunday?'आज रविवार है इसलिए विद्यालय में पठन-पाठन का कार्य स्थगित रहेगा |' :'' }</h4></div>`)
+      $('#heading').empty()     
+      flag++
+      
+    }
+    else{
+      $("#divHour").html(`<span style="font-size:200%">${difference.hours<10?"0"+difference.hours:difference.hours}</span><br>Hours`)
+      $("#divMin").html(`<span style="font-size:200%">${difference.minutes<10?"0"+difference.minutes:difference.minutes}</span><br>Minutes`)
+      $("#divSec").html(`<span style="font-size:200%">${difference.seconds<10?"0"+difference.seconds:difference.seconds}</span><br>Seconds`)
+     
+    }
+    if((!(dt.getTime() > schoolStart.getTime() &&  dt.getTime()  < schoolEnd.getTime())) || funIsHoliday(dt).isHoliday || isSunday){
+      $(".timer").show();
+      $("#divHour").html(`<span style="font-size:200%">${difference.hours<10?"0"+difference.hours:difference.hours}</span><br>Hours`)
+      $("#divMin").html(`<span style="font-size:200%">${difference.minutes<10?"0"+difference.minutes:difference.minutes}</span><br>Minutes`)
+      $("#divSec").html(`<span style="font-size:200%">${difference.seconds<10?"0"+difference.seconds:difference.seconds}</span><br>Seconds`)
+     }
+    else{
+      $(".timer").hide();
+    }
+  
+ 
+  $("#date").html(dt.toLocaleString(`en-IN`,options)+", "+dt.toLocaleDateString('en-IN',{month:"2-digit",day:"2-digit",year:"numeric"}))
+  $("#time").html(dt.toLocaleTimeString(`en-IN`,{hour12:true,hour:"2-digit",minute:"2-digit",second:"2-digit"}).toUpperCase())
+}, 1000);
+
+
+setTimeout(() => {
+  setInterval(() => {
+  var prd= $('.period-no').text();
+  if(Number.isInteger(parseInt(prd))){
+    var startPrd= routine['Class1-2'].filter((i)=> i.Bell==prd)[0].start
+    var endPrd= routine['Class1-2'].filter((i)=> i.Bell==prd)[0].end
+    bellTimeDiff=setDateTime(new Date(current), endPrd)-setDateTime(new Date(current), startPrd)
+    timeDiff=setDateTime(new Date(current), endPrd)- current.getTime();
+    const minutes = (timeDiff / (1000 * 60))+1;
+    const bellDuration=(bellTimeDiff / (1000 * 60));
+    $("#remaining").html(`<span>अभी चल रही घंटी <span class="remain-minute"> ${parseInt(minutes.toString())} </span> मिनट में समाप्त होगी | </span>`).css("margin-top","3px")
+    var width=(minutes/bellDuration)*100;
+  // $(".alert-before").css("width",width+"%")
+  }
+},1000)
+  $(".alert-time").slideDown();  
+}, 2000);
+
+
+setTimeout(() => {
+  $(".alert-remain").slideDown();
+}, 5000);
+
+function funIsHolidayT(dt){
+  let day=dt.getDate()<10?"0"+dt.getDate:dt.getDate();
+  let mon=dt.getMonth()+1<10 ?"0"+parseInt(dt.getMonth()+1):parseInt(dt.getMonth()+1);
+  let yr=dt.getFullYear();
+  let dat=mon+"/"+day+"/"+yr;
+  
+  if(allHolidayDates.includes(dat)){
+    isHolidayTm=true;
+    holidayNameTm=calender[dat].Holiday;
+  }
+  else{
+    isHolidayTm=false;
+    
+  }
+}
+function timeDifference(startDate, endDate) {
+  const startDateTime = new Date(startDate);
+  const endDateTime = new Date(endDate);
+
+  // Calculate the difference in milliseconds
+  const timeDiff = endDateTime - startDateTime;
+
+  // Calculate hours, minutes, and seconds
+  const hours =   Math.abs(Math.floor(timeDiff / (1000 * 60 * 60)));
+  const minutes = Math.abs(Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60)));
+  const seconds = Math.abs(Math.floor((timeDiff % (1000 * 60)) / 1000));
+
+  return {
+    hours: parseInt(hours)-1,
+    minutes:parseInt(minutes),
+    seconds: parseInt(seconds)
+  };
+}
+var detailedCalender=JSON.parse(window.calenderDetailed)
+$(".openCalender").click(function(){
+$('#modcalender').modal('show')
+$(".calender").empty();
+
+for(const k in detailedCalender)   
+  if(detailedCalender.hasOwnProperty(k)){
+    detailedCalender[k].forEach(function(crr,index,arr){
+         
+         if(index==0){
+          $(".calender").append(`<li class="pb-2"><span class="badge badge-gold">${k}</span><table class="table table-bordered tblCalender" id="li${k}"></ul></li>`)
+         }
+         var id="#li"+k;
+         var dateHoliday=new Date(crr.Date);
+         $(id).append(`<tr><td>${index+1}<td style="width:50%">${crr.Holiday}</td><td style="width:20%">${dateHoliday.toLocaleString(`hi-IN`,{weekday:"long"})}</td><td id="td${dateHoliday.toLocaleString(`hi-IN`,{day:"2-digit",month:"2-digit",year:"numeric"}).replaceAll("/","")}" style="width:25%">${dateHoliday.toLocaleString(`hi-IN`,{day:"2-digit",month:"2-digit",year:"numeric"})}</td> </tr`)  
+    })
+  }
+  getNextHoliday()
+})
+
+$(".modalClose").click(function(){
+  $('#modcalender').modal('hide')
+  $('#modteacher').modal('hide')
+  $('#modattendance').modal('hide')
+  $('#modTeacherRout').modal('hide')
+})
+AjaxCall()
+setInterval(() => {
+  Notice()
+}, 10000);
+
+
+function funcAvTrachers(){
+  availableTeachers = allTeachers.filter(item => !getOccuppiedTeachersAv().includes(item)).sort();
+   $("#p-availableTeachers").empty();
+   $("#p-heading").empty().html("<span>Available Teachers</span>");
+   var count=0;
+   availableTeachers.forEach(function(crr, index, arr){
+     $("#p-availableTeachers").append(`<div class="row  justify-content-center mb-2 av-teachers">
+               <div class="col-7 col-md-7"><h6 id="p-${index}" class="truncate mb-1 p-0 pt-1">${crr}</h6>
+                <div class="teacher-number"><span style="opacity:0"></span><i class="fa-solid fa-mobile-screen-button mr-1"></i>${teachers[crr].Mobile}</div>
+                </div>
+               <div class="col-5 col-md-5 text-right"> <span onclick="pclicked(this,'${crr}')" class="avCall-icon" id="p-avCall-icon${crr.replaceAll(" ","")}"><i class="fa-solid fa-angle-down"></i></span><span class="avCall-span"><a id="avcall${crr}" href="tel:+91${teachers[crr]?.Mobile}" class="avCall"><i class="fa-solid fa-phone"></i></a></div>
+                <div style="display:none" id="p-div-p-avCall-icon${crr.replaceAll(" ","")}" class="col-md-12 col-12">
+                  <table class="table table-bordered mt-2 tblrout" >
+                    <thead>
+                      <tr><td style="width:25%">BELL</td><td style="width:30%">CLASS</td><td style="width:45%">SUBJECT</td><tr>
+                      </thead>
+                      <tbody id="p-tbl-p-avCall-icon${crr.replaceAll(" ","")}"></tbody>
+                    </table>
+                  </div>
+                </div> `)
+   })  
+}
+
+
+</script>
+<script src="js/bootstrap.bundle.js"></script>
+
+
+
+
+</body>
+</html>
